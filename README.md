@@ -1,4 +1,4 @@
-# OptikaFX 2D
+﻿# OptikaFX 2D
 
 **OptikaFX 2D** is a dynamic 2D shadows and lighting framework for Unity URP.
 
