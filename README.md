@@ -2,7 +2,7 @@
 
 **OptikaFX 2D** is a dynamic 2D shadows and lighting framework for Unity URP.
 
-It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
+It provides Projected shadows, Wall bending, Day-night cycle, Time manager, Interactive tutorial and One-click setup menu.
 
 ---
 
@@ -10,16 +10,16 @@ It provides projected shadows, wall bending, blob shadows, occlusion, sprite/til
 
 - Dynamic 2D projected shadows
 - Wall bending shadows
-- Perspective, Rotation, Mixed, Occlusion and Blob shadow modes
+- 6 shadow modes
 - Sprite and Tilemap receivers
 - Shadow Areas and mask rules
 - Global Light and Local Light integration with Unity 2D Lights
-- Light Resolver for shadow resolving, MultiShadow, washout and shadow pattern textures
-- Occlusion resolving for global and local lights
-- TimeManager with day/night lighting presets
+- MultiShadow, Washout and Shadow pattern textures
+- TimeManager with day-night cycle presets
 - Timeline editor for animated lighting presets
 - Optional Clock UI using TextMeshPro
 - Optional debug controls using Input System
+- Interactive Tutorial and Documentation Built-in Unity
 - Automatic URP Render Feature setup
 - Editor tools for adding/removing OptikaFX components
 
