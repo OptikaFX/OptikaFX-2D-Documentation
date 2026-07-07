@@ -1,541 +1,501 @@
-﻿# Receivers and Shadow Areas
+# Wall Bending Compatibility
 
-Receivers and Shadow Areas define where OptikaFX 2D shadows can appear.
+Wall Bending is a Caster feature used to make projected shadows bend, clip or interact with wall receivers.
 
-A `Receiver` is the surface that displays shadows.
-
-A `ShadowArea` defines what kind of area the object represents, such as ground, wall, water or hole.
+Not every OptikaFX component supports Wall Bending.
 
 ## Index
 
 - [Overview](#overview)
-- [Receivers](#receivers)
-- [Shadow Areas](#shadow-areas)
-- [Receiver Types](#receiver-types)
-- [Area Types](#area-types)
-- [Ground Receivers](#ground-receivers)
-- [Wall Receivers](#wall-receivers)
-- [Water and Hole Areas](#water-and-hole-areas)
-- [Tilemap Receivers](#tilemap-receivers)
-- [Receiver Material](#receiver-material)
-- [Wall ID](#wall-id)
-- [Elevation Level](#elevation-level)
-- [Shadow Alpha Mask](#shadow-alpha-mask)
+- [Compatible Components](#compatible-components)
+- [Not Compatible Components](#not-compatible-components)
+- [When to Use Wall Bending](#when-to-use-wall-bending)
+- [When Not to Use Wall Bending](#when-not-to-use-wall-bending)
 - [Recommended Setup](#recommended-setup)
-- [Useful C# Examples](#useful-c-examples)
-  - [Get a ShadowReceiver](#get-a-shadowreceiver)
-  - [Enable or disable a receiver](#enable-or-disable-a-receiver)
-  - [Set receiver material](#set-receiver-material)
-  - [Set elevation level](#set-elevation-level)
-  - [Set ShadowArea type](#set-shadowarea-type)
+- [Wall Bending Raycasts](#wall-bending-raycasts)
+- [Large Objects and Wide Caster Sampling](#large-objects-and-wide-caster-sampling)
+- [Occluders and Wall Bending](#occluders-and-wall-bending)
 - [Troubleshooting](#troubleshooting)
 
 ---
 
 ## Overview
 
-OptikaFX uses receivers to display shadows on specific surfaces.
+Wall Bending allows projected shadows to interact with walls.
+![OptikaFX 2D Menu](./images/caster-wall-bending.png)
 
-Examples:
+It is mainly used when a shadow cast on the ground should continue, bend or clip when it reaches a wall receiver.
 
-- Ground
-- Walls
-- Tilemaps
-- Floors
-- Platforms
-- Special shadow surfaces
+This is useful for:
 
-Shadow Areas are used to classify these surfaces.
+- Characters near walls
+- Props casting shadows onto wall surfaces
+- Perspective shadows that should interact with vertical receivers
+- Hybrid top-down/isometric scenes
+- Large objects whose shadow may touch a wall only from one side
 
-For example:
-
-- Ground receives normal ground shadows.
-- Walls receive wall bending/projected wall shadows.
-- Water or holes can block or mask shadows.
+Wall Bending is not a general occlusion feature. It is specifically tied to compatible Caster shadows and receiver setups.
 
 ---
 
-## Receivers
+## Compatible Components
 
-![OptikaFX 2D Menu](./images/receiver.png)
+Wall Bending is compatible with:
 
-Receivers are components that render shadow information onto an object.
-
-Main receiver components:
-
-| Component | Use |
+| Component | Compatibility |
 |---|---|
-| `ShadowReceiver` | Used for SpriteRenderer/MeshRenderer based objects. |
-| `TilemapShadowReceiver` | Used for Tilemap based receivers. |
+| `Caster` | Supported |
+| `ShadowReceiver` | Supported as wall receiver |
+| `TilemapShadowReceiver` | Supported as wall receiver |
+| `ShadowArea` | Used to define wall/ground areas |
 
-Receivers are usually added through the OptikaFX setup menu.
+Recommended caster modes:
 
----
-
-## Shadow Areas
-
-`ShadowArea` defines what type of area an object represents.
-
-It does not render the shadow by itself. It provides area information used by shadow mask rules.
-
-ShadowArea types include:
-
-| Type | Description |
+| Caster Mode | Wall Bending Support |
 |---|---|
-| `Ground_Red` | Ground/floor area. |
-| `Wall_Green` | Wall/vertical area. |
-| `Hole_Water_Blue` | Blocks or masks shadows, usually holes or water. |
-| `Special_Alpha` | Reserved for special/custom area behavior. |
+| `Perspective` | Supported |
+| `Mixed` | Supported |
+| `Rotation` | Not recommended |
+| `TopDownBlob` | Not recommended |
+
+For best results, use `Perspective` or `Mixed` mode.
 
 ---
 
-## Receiver Types
+## Not Compatible Components
 
-OptikaFX supports:
+Wall Bending is not compatible with:
 
-| Receiver | Description |
+| Component | Reason |
 |---|---|
-| `ShadowReceiver` | Used for normal GameObjects with renderers. |
-| `TilemapShadowReceiver` | Used for Unity Tilemaps. |
+| `ObjectOccluder` | Occluders use occlusion/projection masks, not Caster wall bending logic. |
+| `CompositeTilemapOccluder` | Tilemap occluders generate occlusion silhouettes, not bendable Caster shadows. |
+| Blob-only shadows | Blob shadows are contact shadows and are not designed to bend onto walls. |
 
-Use `ShadowReceiver` for:
-
-- Sprite objects
-- MeshRenderer objects
-- Wall sprites
-- Ground sprites
-- Custom surface objects
-
-Use `TilemapShadowReceiver` for:
-
-- Ground tilemaps
-- Wall tilemaps
-- Floor tilemaps
-- Large tile-based maps
+If you need wall bending, use a `Caster`, not an occluder.
 
 ---
 
-## Area Types
+## When to Use Wall Bending
 
-Area types determine how shadows interact with the surface.
+Use Wall Bending when:
 
-| Area | Color Channel | Common Use |
-|---|---|---|
-| Ground | Red | Floors, ground, walkable surfaces |
-| Wall | Green | Walls, cliffs, vertical surfaces |
-| Water/Hole | Blue | Holes, water, blocked areas |
-| Special | Alpha | Custom rules or special masks |
+- A character shadow should interact with walls.
+- A prop shadow should bend from ground to wall.
+- Your scene has both ground and wall receivers.
+- You use perspective-style shadows.
+- Shadows should visually respect vertical surfaces.
+- A wide caster, such as a tree or large prop, needs more reliable wall detection.
 
-These color associations are used internally by the mask system.
+Good examples:
 
----
-
-## Ground Receivers
-
-Ground receivers are used for normal floor shadows.
-
-Use them for:
-
-- Terrain
-- Floors
-- Platforms
-- Ground tilemaps
-- Walkable surfaces
-
-Setup:
-
-    OptikaFX 2D / Add Receivers To Selected GameObject or Tilemap / Ground
-
-This usually adds/configures:
-
-- `ShadowArea`
-- Area type as Ground
-- Receiver rules for ground shadows
+- Player standing near a wall
+- Tree casting a shadow onto a cliff wall
+- Object shadow crossing from ground to wall
+- Character in a top-down/isometric room
+- Large sprite whose left or right side reaches a wall before the center does
 
 ---
 
-## Wall Receivers
+## When Not to Use Wall Bending
 
-Wall receivers are used for wall shadows and wall bending.
+Do not use Wall Bending when:
 
-Use them for:
+- You only need simple contact shadows.
+- You use blob-only shadows.
+- You are using `ObjectOccluder`.
+- You are using `CompositeTilemapOccluder`.
+- You only need environment occlusion silhouettes.
+- There are no wall receivers in the scene.
 
-- Walls
-- Cliffs
-- Vertical surfaces
-- Building sides
-- Tilemap walls
-
-Setup:
-
-    OptikaFX 2D / Add Receivers To Selected GameObject or Tilemap / Wall
-
-This usually adds/configures:
-
-- `ShadowArea`
-- `ShadowReceiver` or `TilemapShadowReceiver`
-- Area type as Wall
-- Unique Wall ID
-
-Wall receivers are required for Caster Wall Bending.
-
----
-
-## Water and Hole Areas
-
-Water and hole areas are used to block or mask shadows.
-
-Use them for:
-
-- Water
-- Pits
-- Holes
-- Void areas
-- Shadow blocking masks
-
-Setup:
-
-    OptikaFX 2D / Add Receivers To Selected GameObject or Tilemap / Water or Hole
-
-This usually adds/configures:
-
-- `ShadowArea`
-- Area type as Hole/Water
-- Blue mask/channel behavior
-
-These areas are commonly used with `BlockedBy` rules in shadow quads/materials.
-
----
-
-## Tilemap Receivers
-
-Tilemap receivers are used when shadows should appear on a tilemap.
-
-Use `TilemapShadowReceiver` for wall tilemaps or tilemap surfaces that need receiver behavior.
-
-Recommended for:
-
-- Tilemap walls
-- Tilemap floors
-- Tilemap cliffs
-- Large 2D levels
-
-Tilemap receivers create a hidden tilemap used for shadow rendering.
-
----
-
-## Receiver Material
-
-Receivers need a material compatible with OptikaFX shadow rendering.
-
-Usually this is assigned automatically from:
-
-    Assets/OptikaFX 2D/Settings/ProjectDefaults.asset
-
-Check that `Shadow Receiver Material` is assigned in ProjectDefaults.
-
-If the receiver material is missing, shadows may not appear.
-
----
-
-## Wall ID
-
-Wall receivers use a unique Wall ID.
-
-This helps the system identify wall ownership and receiver matching.
-
-The Wall ID is generated automatically.
-
-You usually do not need to edit it manually.
-
-If duplicated Wall IDs are detected, the registry can assign new IDs automatically.
-
----
-
-## Elevation Level
-
-Receivers can use elevation levels.
-
-Elevation is useful for:
-
-- Multi-floor scenes
-- Platforms
-- Bridges
-- Different height layers
-- Sorting shadow levels
-
-Caster and receiver elevation levels should match when needed.
-
-If shadows appear on the wrong level, check:
-
-- Caster elevation level
-- Receiver elevation level
-- ShadowRenderQuad elevation level
-
----
-
-## Shadow Alpha Mask
-
-Receivers can optionally use an alpha mask.
-
-This allows parts of a receiver to ignore or weaken shadows.
-
-Useful for:
-
-- Grates
-- Holes
-- Transparent platforms
-- Decorative alpha cutouts
-- Partial shadow receiving surfaces
-
-Important fields:
-
-| Field | Description |
-|---|---|
-| `Shadow Alpha Mask` | Sprite used as alpha mask. |
-| `Shadow Alpha Mask Scale` | Scale applied to the mask. |
-| `Shadow Alpha Mask Strength` | Strength of the mask effect. |
-| `Invert Shadow Alpha Mask` | Inverts the mask behavior. |
-| `Shadow Alpha Mask Channel` | Selects Alpha, Red or Grayscale channel. |
+For environment silhouettes or large static blockers, use occluders instead.
 
 ---
 
 ## Recommended Setup
 
-### Ground
+### 1. Add a Caster
 
-1. Select ground object or ground tilemap.
-2. Right-click in the Hierarchy.
-3. Choose:
+Select the object that should cast a bendable shadow.
 
-    OptikaFX 2D / Add Receivers To Selected GameObject or Tilemap / Ground
+Use:
 
-![OptikaFX 2D Menu](./images/add-receiver.png)
+    OptikaFX 2D / Add Casters To Selected GameObjects / Perspective
 
-4. Check that `ShadowArea` was added.
-5. Confirm area type is Ground.
+or:
 
-### Wall
+    OptikaFX 2D / Add Casters To Selected GameObjects / Mixed
 
-1. Select wall object or wall tilemap.
-2. Right-click in the Hierarchy.
-3. Choose:
+### 2. Add a Wall Receiver
+
+Select the wall object or wall tilemap.
+
+Use:
 
     OptikaFX 2D / Add Receivers To Selected GameObject or Tilemap / Wall
 
-4. Check that `ShadowArea` was added.
-5. Check that `ShadowReceiver` or `TilemapShadowReceiver` was added.
-6. Confirm area type is Wall.
+### 3. Enable Wall Bending
 
-### Water or Hole
+Select the object with the `Caster`.
 
-1. Select water/hole object or tilemap.
-2. Right-click in the Hierarchy.
-3. Choose:
+Open:
 
-    OptikaFX 2D / Add Receivers To Selected GameObject or Tilemap / Water or Hole
+    Wall Bending / Receiver Clipping
 
-4. Check that `ShadowArea` was added.
-5. Confirm area type is Hole/Water.
+Enable:
+
+    Wall Bending
+
+### 4. Configure Detection
+
+Depending on your project, configure:
+
+- Detection Mode
+- Wall Layer
+- Hit Triggers
+- Ignore Own Hierarchy
+- Max Component Hits
+- Use Multi Hit
+- Max Receiver Hits
+- Min Hit Distance Separation
+- Min Angle From Horizontal
+- Horizontal Ray Samples
+- Horizontal Sample Width
+
+### 5. Test the Shadow
+
+Move the caster close to the wall and check if the projected shadow interacts with the wall receiver.
+
+For small or medium objects, the default single center ray is usually enough.
+
+For large sprites, trees, wide props or big characters, increase `Horizontal Ray Samples`.
 
 ---
 
-## Useful C# Examples
+## Wall Bending Raycasts
+
+Wall Bending detects walls using 2D raycasts.
+
+A ray is cast from the caster hinge/origin toward the projected shadow tip. If the ray hits a valid wall receiver, the Caster can bend or clip the shadow at that wall.
+
+The system can detect wall receivers in different ways:
+
+| Detection Mode | Description |
+|---|---|
+| `LayerMask` | Uses the configured wall physics layer. |
+| `ReceiverComponents` | Uses `ShadowReceiver` or `TilemapShadowReceiver` components. This does not require wall-specific physics layers. |
+| `LayerMaskAndReceiverComponents` | Uses physics layers and also validates receiver components. |
+
+By default, component-based detection is recommended because it is easier to set up and less dependent on project layer configuration.
+
+### Valid Wall Hits
+
+A raycast hit is considered valid when:
+
+- The hit collider belongs to a valid `ShadowReceiver` or `TilemapShadowReceiver`, depending on detection mode.
+- The receiver is enabled.
+- The receiver has `blockWallBending` enabled.
+- The receiver has a valid `WallID`.
+- The hit comes from the expected direction.
+- The hit normal is suitable for wall bending.
+
+Wall Bending only accepts wall projection hits that represent the shadow reaching the collider from bottom to top.
+
+Internally, renderable wall hits require the collider normal to point downward enough:
+
+    hit.normal.y < -0.05
+
+This prevents Wall Bending from activating on the wrong side of a collider.
+
+### Triggers
+
+If `Hit Triggers` is enabled, Wall Bending raycasts can hit trigger colliders.
+
+Use this only when your wall receiver colliders are configured as triggers or when your project intentionally uses trigger-based wall detection.
+
+### Ignore Own Hierarchy
+
+If `Ignore Own Hierarchy` is enabled, Wall Bending ignores colliders that belong to the same hierarchy as the caster.
+
+This prevents a character or prop from detecting its own colliders as walls.
 
 ---
 
+## Large Objects and Wide Caster Sampling
 
-## Get a ShadowReceiver
-```csharp
-using UnityEngine;
-using OptikaFX;
+Large sprites may fail to detect walls correctly when only a single center ray is used.
 
-public class ReceiverExample : MonoBehaviour
-{
-    private ShadowReceiver receiver;
+This can happen when:
 
-    private void Awake()
-    {
-        receiver = GetComponent<ShadowReceiver>();
-    }
-}
+- The object is very wide.
+- The wall touches only one side of the projected shadow.
+- The caster hinge is centered, but the left or right side reaches the wall first.
+- A large tree, prop or character overlaps wall space horizontally.
+- The shadow projection is diagonal and the center ray misses the receiver.
 
-```
+To solve this, Wall Bending supports horizontal ray sampling.
+
+Instead of casting only one ray from the center, the Caster can cast multiple horizontal rays across the sprite width.
+
+### Horizontal Ray Samples
+
+Controls how many horizontal rays are used for Wall Bending detection.
+
+Inspector field:
+
+    Wall Bending / Wide Caster Sampling / Horizontal Ray Samples
+
+| Value | Use |
+|---|---|
+| `1` | Center ray only. Best performance. Recommended for small objects. |
+| `3` | Good default for wide characters and medium props. |
+| `5` | Recommended for trees, large props and wide sprites. |
+| `7` to `9` | Use only for very large or irregular objects. Higher cost. |
+
+The system prefers odd sample counts so the center ray is always included.
+
+For example, if an even value is selected, the system may internally resolve it to the next odd amount.
+
+Recommended values:
+
+| Object Type | Recommended Samples |
+|---|---|
+| Small character | `1` |
+| Medium character | `1` to `3` |
+| Large character | `3` |
+| Tree | `3` to `5` |
+| Wide prop | `3` to `5` |
+| Very large object | `5` to `9` |
+
+### Horizontal Sample Width
+
+Controls how much of the sprite width is sampled by the horizontal rays.
+
+Inspector field:
+
+    Wall Bending / Wide Caster Sampling / Horizontal Sample Width
+
+| Value | Meaning |
+|---|---|
+| `1.0` | Samples the full sprite width. |
+| `0.5` | Samples half of the sprite width around the hinge/center. |
+| `0.25` | Samples a narrow area near the hinge/center. |
+| `0` | Effectively collapses sampling to the center. |
+
+Use `1.0` when the whole sprite should be considered for wall detection.
+
+Use smaller values when the visual shadow should only react near the center or hinge.
+
+### Example: Large Tree
+
+For a large tree casting a perspective shadow onto a cliff wall:
+
+Recommended settings:
+
+| Setting | Value |
+|---|---|
+| Caster Mode | `Perspective` or `Mixed` |
+| Wall Bending | Enabled |
+| Detection Mode | `ReceiverComponents` |
+| Horizontal Ray Samples | `5` |
+| Horizontal Sample Width | `1` |
+| Use Multi Hit | Enabled |
+| Max Receiver Hits | `2` or `3` |
+
+This lets the tree detect the wall even if only one side of the shadow reaches it.
+
+### Example: Large Character
+
+For a wide boss character or large enemy:
+
+Recommended settings:
+
+| Setting | Value |
+|---|---|
+| Caster Mode | `Mixed` |
+| Wall Bending | Enabled |
+| Horizontal Ray Samples | `3` |
+| Horizontal Sample Width | `0.75` to `1` |
+
+Use `3` samples first. Increase to `5` only if the side rays still miss important wall receivers.
+
+### Performance Notes
+
+Each horizontal sample performs a raycast.
+
+Higher values improve detection reliability but increase physics query cost.
+
+Use the lowest value that gives stable results.
+
+Recommended workflow:
+
+1. Start with `1`.
+2. If the object is wide and misses walls, try `3`.
+3. If side detection is still unreliable, try `5`.
+4. Use `7` or `9` only for very large objects.
+
+Also keep `Max Component Hits` reasonable. The default value is usually enough for most scenes.
+
 ---
 
-## Enable or disable a receiver
-```csharp
-using UnityEngine;
-using OptikaFX;
+## Occluders and Wall Bending
 
-public class ToggleReceiverExample : MonoBehaviour
-{
-    [SerializeField]
-    private ShadowReceiver receiver;
+Occluders are not compatible with Wall Bending.
 
-    public void SetReceiverEnabled(bool enabled)
-    {
-        if (receiver == null)
-            return;
+This is expected.
 
-        receiver.isEnabled = enabled;
-    }
-}
+Occluders are designed for:
 
-```
----
+- Environment occlusion
+- Silhouette masks
+- Tilemap occlusion
+- Static obstacle shadows
+- Directional mask projection
 
-## Set receiver material
-```csharp
-using UnityEngine;
-using OptikaFX;
+Wall Bending is designed for:
 
-public class ReceiverMaterialExample : MonoBehaviour
-{
-    [SerializeField]
-    private ShadowReceiver receiver;
+- Caster-projected shadows
+- Ground-to-wall interaction
+- Receiver-based bending/clipping
+- Raycast-based wall detection from the Caster projection
 
-    [SerializeField]
-    private Material material;
+Use this rule:
 
-    public void ApplyMaterial()
-    {
-        if (receiver == null)
-            return;
+| Need | Use |
+|---|---|
+| Character or prop shadow bending on walls | `Caster` |
+| Dynamic sprite shadow with wall interaction | `Caster` |
+| Large sprite shadow detecting wall contact across its width | `Caster` with multiple horizontal ray samples |
+| Environment occlusion silhouette | `ObjectOccluder` |
+| Tilemap occlusion silhouette | `CompositeTilemapOccluder` |
+| Static obstacle/environment shadow | `ObjectOccluder` or `CompositeTilemapOccluder` |
 
-        receiver.receiverMaterial = material;
-    }
-}
+If a shadow needs Wall Bending, use a `Caster`.
 
-```
----
+If an object only needs to contribute to environment occlusion, use an occluder.
 
-## Set elevation level
-```csharp
-using UnityEngine;
-using OptikaFX;
-
-public class ReceiverElevationExample : MonoBehaviour
-{
-    [SerializeField]
-    private ShadowReceiver receiver;
-
-    public void SetElevation(int elevation)
-    {
-        if (receiver == null)
-            return;
-
-        receiver.elevationLevel = Mathf.Clamp(elevation, 0, 5);
-    }
-}
-
-```
----
-
-## Set ShadowArea type
-```csharp
-using UnityEngine;
-using OptikaFX;
-
-public class ShadowAreaTypeExample : MonoBehaviour
-{
-    [SerializeField]
-    private ShadowArea shadowArea;
-
-    public void SetGround()
-    {
-        if (shadowArea == null)
-            return;
-
-        shadowArea.areaType = ShadowArea.AreaType.Ground_Red;
-    }
-
-    public void SetWall()
-    {
-        if (shadowArea == null)
-            return;
-
-        shadowArea.areaType = ShadowArea.AreaType.Wall_Green;
-    }
-
-    public void SetWaterOrHole()
-    {
-        if (shadowArea == null)
-            return;
-
-        shadowArea.areaType = ShadowArea.AreaType.Hole_Water_Blue;
-    }
-}
-
-```
 ---
 
 ## Troubleshooting
 
-### Shadows do not appear on the receiver
+### Occluder does not bend on walls
+
+This is expected.
+
+Occluders are not compatible with Wall Bending.
+
+Use a `Caster` if you need wall bending.
+
+---
+
+### Wall Bending does not work
 
 Check:
 
-- Receiver component exists.
-- Receiver is enabled.
-- Receiver material is assigned.
-- ShadowArea exists.
-- Area type is correct.
-- ShadowRenderQuad exists on the camera.
-- GlobalLight exists.
-- Caster exists and is generating shadows.
+- The object has a `Caster`.
+- The Caster uses `Perspective` or `Mixed` mode.
+- Wall Bending is enabled.
+- A wall receiver exists.
+- The wall object has `ShadowReceiver` or `TilemapShadowReceiver`.
+- The wall area is configured as wall.
+- Detection settings are correct.
+- The caster is close enough to the wall.
+- The shadow angle allows wall bending.
+- The wall receiver has `blockWallBending` enabled.
+- The wall receiver has a valid `WallID`.
 
-### Receiver material is empty
+---
 
-Check:
+### Large object misses the wall
 
-    Assets/OptikaFX 2D/Settings/ProjectDefaults.asset
+If a large object does not trigger Wall Bending, the center ray may be missing the wall.
 
-Make sure `Shadow Receiver Material` is assigned.
+Adjust:
 
-Then re-run setup or add receiver again.
+- Increase `Horizontal Ray Samples` to `3`.
+- For very wide objects, increase to `5`.
+- Set `Horizontal Sample Width` closer to `1`.
+- Make sure the wall receiver collider covers the visible wall area.
+- Make sure the shadow projection is long enough to reach the wall.
 
-### Shadows appear on the wrong surface
+Recommended starting point for large objects:
 
-Check:
+    Horizontal Ray Samples: 3
+    Horizontal Sample Width: 1
 
-- ShadowArea type.
-- RequiredArea rules.
-- BlockedBy rules.
-- Elevation level.
-- ShadowRenderQuad configuration.
+For trees or very wide props:
 
-### Wall bending does not work
+    Horizontal Ray Samples: 5
+    Horizontal Sample Width: 1
 
-Check:
+---
 
-- The object uses a `ShadowReceiver` or `TilemapShadowReceiver`.
-- The ShadowArea type is Wall.
-- The Caster has Wall Bending enabled.
-- The Caster mode supports Wall Bending.
-- The wall receiver has a valid Wall ID.
-- Occluders are not compatible with Wall Bending.
-- Check [Wall Bending Compatibility](wall-bending.md)
-
-
-
-### Tilemap receiver does not update
+### Shadow bends on the wrong object
 
 Check:
 
-- TilemapShadowReceiver exists.
-- Hidden shadow tilemap exists.
-- Auto sync is enabled.
-- Tilemap has valid tiles.
-- Sorting layer/order is correct.
+- Wall Layer settings.
+- Detection Mode.
+- Ignore Own Hierarchy.
+- Receiver Wall ID.
+- Whether other receivers overlap the intended wall.
+- Whether trigger colliders are being hit unexpectedly.
+- Whether `Hit Triggers` should be disabled.
 
-### Water or holes do not block shadows
+---
+
+### Shadow is clipped too early
+
+Adjust:
+
+- Wall Shadow Offset
+- Raycast Hit Offset
+- Min Hit Distance Separation
+- Min Angle From Horizontal
+
+If multiple colliders are very close together, increase `Min Hit Distance Separation` slightly to avoid duplicate wall hits.
+
+---
+
+### Shadow does not reach the wall
+
+Adjust:
+
+- Projection Length Multiplier on the Caster
+- Projection Length on GlobalLight
+- TimeManager preset projection length
+- LocalLight projection length if using local lights
+
+For elevated casters, also check whether the projected distance is enough after elevation offsets are applied.
+
+---
+
+### Multi Hit does not detect multiple walls
 
 Check:
 
-- ShadowArea type is Hole/Water.
-- Shadow quad `BlockedBy` is set to Holes and Water.
-- The mask material/shader is correctly assigned.
-- The object is included in the shadow mask rendering path.
+- `Use Multi Hit` is enabled.
+- `Max Receiver Hits` is greater than `1`.
+- The ray actually crosses multiple valid wall receivers.
+- The receivers have different hit distances.
+- `Min Hit Distance Separation` is not too large.
+
+Multi Hit is useful for:
+
+- Grates
+- Holes
+- Windows
+- Stacked walls
+- Layered wall receivers
+
+---
+
+### Blob shadows do not bend
+
+This is expected.
+
+Blob shadows are contact shadows and are not intended to bend onto walls.
+
+Use `Perspective` or `Mixed` Caster mode for wall bending.
 
 ← [Back to Documentation Index](index.md)
