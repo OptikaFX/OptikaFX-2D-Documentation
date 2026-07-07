@@ -1,9 +1,28 @@
-﻿
+
 # Quick Start
 
 This guide shows the fastest way to get OptikaFX 2D running in a scene.
 
 ---
+
+Optional guided tutorial:
+
+Open the sample scene:
+
+```text 
+01 - Scarecrow Tutorial
+
+```
+
+When this scene is opened, the Scarecrow Tutorial window appears automatically and guides you through the basic OptikaFX setup step by step.
+
+Tutorial guide:
+
+- [Scarecrow Tutorial](Documentation~/scarecrow-tutorial.md)
+
+```
+
+##Step-by-step Setup
 
 ## 1. Run Full Setup
 
