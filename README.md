@@ -1,8 +1,8 @@
-﻿# OptikaFX 2D
+# OptikaFX 2D
 
 **OptikaFX 2D** is a dynamic 2D shadows and lighting framework for Unity URP.
 
-It provides Projected shadows, Wall bending, Day-night cycle, Time manager, Interactive tutorial and One-click setup menu.
+It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
 ---
 
@@ -19,9 +19,11 @@ It provides Projected shadows, Wall bending, Day-night cycle, Time manager, Inte
 - Timeline editor for animated lighting presets
 - Optional Clock UI using TextMeshPro
 - Optional debug controls using Input System
-- Interactive Tutorial and Documentation Built-in Unity
+- Interactive Tutorial scene with guided Editor window
+- Interactive Documentation built into Unity
 - Automatic URP Render Feature setup
-- Editor tools for adding/removing OptikaFX components
+- Editor tools for adding/removing OptikaFX componente
+
 
 ---
 
@@ -101,6 +103,7 @@ Main documentation files:
 
 - [Documentation Index](Documentation~/index.md)
 - [Quick Start](Documentation~/quick-start.md)
+- [Scarecrow Tutorial](Documentation~/scarecrow-tutorial.md)
 - [Animator Blend Tree Setup](Documentation~/animator-blend-tree-setup.md)
 - [Camera](Documentation~/camera.md)
 - [Casters](Documentation~/casters.md)
@@ -119,14 +122,15 @@ Main documentation files:
 Recommended reading order:
 
 1. [Quick Start](Documentation~/quick-start.md)
-2. [Camera](Documentation~/camera.md)
-3. [Receivers](Documentation~/receivers.md)
-4. [Casters](Documentation~/casters.md)
-5. [Global Light](Documentation~/global-light.md)
-6. [Light Resolver](Documentation~/light-resolver.md)
-7. [Local Light](Documentation~/local-light.md)
-8. [TimeManager](Documentation~/time-manager.md)
-9. [Clock UI](Documentation~/clock-ui.md)
+2. [Scarecrow Tutorial](Documentation~/scarecrow-tutorial.md)
+3. [Camera](Documentation~/camera.md)
+4. [Receivers](Documentation~/receivers.md)
+5. [Casters](Documentation~/casters.md)
+6. [Global Light](Documentation~/global-light.md)
+7. [Light Resolver](Documentation~/light-resolver.md)
+8. [Local Light](Documentation~/local-light.md)
+9. [TimeManager](Documentation~/time-manager.md)
+. [Clock UI](Documentation~/clock-ui.md)
 
 Advanced topics:
 
