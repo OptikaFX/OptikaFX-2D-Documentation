@@ -22,6 +22,7 @@ Not every OptikaFX component supports Wall Bending.
 ## Overview
 
 Wall Bending allows projected shadows to interact with walls.
+![OptikaFX 2D Menu](./images/caster-wall-bending.png)
 
 It is mainly used when a shadow cast on the ground should continue, bend or clip when it reaches a wall receiver.
 
