@@ -1,4 +1,4 @@
-﻿
+
 # Local Lights
 
 The `LocalLight` component adds localized shadow and lighting influence to OptikaFX 2D.
@@ -13,6 +13,8 @@ Local Lights are useful for torches, lamps, candles, magic lights, street lights
 - [Main Fields](#main-fields)
 - [Global Blending](#global-blending)
 - [Spot and Radial Lights](#spot-and-radial-lights)
+- [Directional Local Light](#directional-local-light)
+- [Scheduled Local Light](#scheduled-local-lights)
 - [Setup from Unity Light2D](#setup-from-unity-light2d)
 - [Light Effects](#light-effects)
 - [Common Light Effect Setups](#common-light-effect-setups)
@@ -24,8 +26,10 @@ Local Lights are useful for torches, lamps, candles, magic lights, street lights
   - [Set local light intensity](#set-local-light-intensity)
   - [Configure a radial local light](#configure-a-radial-local-light)
   - [Configure a spot local light](#configure-a-spot-local-light)
+  - [Configure a directional local light](#configure-a-directional-local-light)
   - [Rotate a spot light](#rotate-a-spot-light)
   - [Use a transform as ground anchor](#use-a-transform-as-ground-anchor)
+  - [Schedule a LocalLight by hour](#schedule-a-locallight-by-hour)
 - [Troubleshooting](#troubleshooting)
 
 ---
@@ -167,6 +171,63 @@ Use it for:
 - Magic cones
 
 ---
+
+## Directional Local Light
+
+Use for:
+
+- Window light
+- Area-based directional shadows
+- Local sunlight/moonlight patch
+- Rectangular zones with a fixed shadow Direction
+---
+
+## Scheduled Local Lights
+
+A scheduled Local Light is a `LocalLight` that turns on, turns off or changes intensity based on time.
+
+This is useful for:
+
+- Street lamps that turn on at night
+- Torches that activate after sunset
+- Window lights that only appear during evening
+- Alarm lights that activate during events
+- Magic lights that follow a gameplay schedule
+- Indoor lights that are disabled during daytime
+
+Recommended behavior:
+
+- Use `isEnabled` for simple on/off scheduling.
+- Use `intensity` for smooth fade in/out.
+- Keep Unity `Light2D` and OptikaFX `LocalLight` synchronized if both are visible.
+- Use `Priority` if scheduled lights overlap other local lights.
+
+---
+
+### Simple On/Off Schedule
+
+Example:
+
+| Field | Suggested Value |
+|---|---:|
+| Night Start Hour | `18` |
+| Night End Hour | `6` |
+| LocalLight Is Enabled | Enabled only during night |
+
+This setup is good for street lamps, torches and windows.
+
+---
+
+Recommended values:
+
+| Field | Suggested Value |
+|---|---:|
+| `Mode` | `Directional` |
+| `Directional Box Size` | `5 x 5` or larger |
+| `Rotation Angle` | Direction of the local shadows |
+| `Intensity` | `0.5 - 1.0` |
+| `Override Global` | Enabled |
+| `Blend With Global` | `0.0 - 0.4` |
 
 ## Setup from Unity Light2D
 
