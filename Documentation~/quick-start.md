@@ -20,7 +20,7 @@ Tutorial guide:
 
 - [Scarecrow Tutorial](Documentation~/scarecrow-tutorial.md)
 
-```
+---
 
 ##Step-by-step Setup
 
