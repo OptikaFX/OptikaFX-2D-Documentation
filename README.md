@@ -4,6 +4,11 @@
 
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
+<p align="center">
+  <a href="https://assetstore.unity.com/packages/slug/YOUR-ASSET-SLUG" target="_blank">
+    <img src="https://img.shields.io/badge/Get%20it%20on-Unity%20Asset%20Store-black?style=for-the-badge&logo=unity" alt="Get it on Unity Asset Store">
+  </a>
+</p>
 ---
 
 ## Features
