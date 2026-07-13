@@ -21,8 +21,13 @@ All assets by Kenney Vleugels listed below are licensed under the Creative Commo
 * **Toon Characters**
   * Created/distributed by Kenney (www.kenney.nl) | Creation date: 26-09-2019
 
-### Audio & Music
-* **Music: "Funk & Breakbeat"** by AlexGuz.
+### Audio & Music (Pixabay License)
+The background music used in promotional materials is licensed under the Pixabay Content License:
+
+* **Title:** "Funk & Breakbeat" (ID: 541097)
+* **Artist/Licensor:** AlexGuz (https://pixabay.com/users/alexguz-37772443/)
+* **Download Date:** 2026-07-12
+* **Terms:** Licensed pursuant to the Content License defined in the Pixabay Terms of Service (https://pixabay.com/service/terms/).
 
 ---
 
