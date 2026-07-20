@@ -29,7 +29,7 @@ Tutorial guide:
 Use:
 
 ```text
-OptikaFX 2D / 01. Run Full Setup
+Tools / OptikaFX 2D / 01. Run Full Setup
 ```
 
 ![OptikaFX 2D Menu](./images/full-setup-menu.png)
