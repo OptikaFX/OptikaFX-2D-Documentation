@@ -66,7 +66,7 @@ The TimeManager can be used to:
 
 When using:
 
-**OptikaFX 2D / 01. Run Full Setup**
+**Tools / OptikaFX 2D / 01. Run Full Setup**
 
 OptikaFX creates this hierarchy:
 
