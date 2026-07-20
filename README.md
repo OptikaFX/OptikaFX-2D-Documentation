@@ -2,11 +2,12 @@
 
 **OptikaFX 2D** is a dynamic 2D shadows and lighting framework for Unity URP.
 
-It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
-
 <div align="center">
 <img src="Documentation~/images/Header_GitHub.png" alt="OptikaFX 2D Logo" width="1080">
 </div>
+
+It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
+
 
 <p align="center">
   <a href="https://assetstore.unity.com/packages/slug/YOUR-ASSET-SLUG" target="_blank">
