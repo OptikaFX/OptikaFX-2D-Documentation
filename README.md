@@ -74,7 +74,7 @@ After installation, open your project using URP and run the setup from the Optik
 2. Run Full Setup:
 
 ```text
-OptikaFX 2D / 01. Run Full Setup
+Tools / OptikaFX 2D / 01. Run Full Setup
 ```
 
 This creates and configures the core OptikaFX scene objects, including the manager, Global Light, TimeManager and Light Resolver.
