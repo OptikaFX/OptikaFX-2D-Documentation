@@ -4,7 +4,9 @@
 
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
+<div align="center">
 ![OptikaFX 2D Logo](Documentation~/images/Header_GitHub.png)
+</div>
 
 <p align="center">
   <a href="https://assetstore.unity.com/packages/slug/YOUR-ASSET-SLUG" target="_blank">
