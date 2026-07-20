@@ -24,7 +24,7 @@ In most projects, you do not need to create this component manually. It is confi
 The Light Resolver is created when running:
 
 ```
-OptikaFX 2D / 01. Run Full Setup
+Tools / OptikaFX 2D / 01. Run Full Setup
 ```
 
 or when running the scene core setup step:
