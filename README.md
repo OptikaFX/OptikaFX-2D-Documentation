@@ -5,7 +5,7 @@
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
 <div align="center">
-![OptikaFX 2D Logo](Documentation~/images/Header_GitHub.png)
+<img src="Documentation~/images/Header_GitHub.png" alt="OptikaFX 2D Logo" width="500">
 </div>
 
 <p align="center">
