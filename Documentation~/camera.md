@@ -55,7 +55,7 @@ Full Setup automatically configures the active camera.
 
 Menu:
 
-    OptikaFX 2D / 01. Run Full Setup
+    Tools / OptikaFX 2D / 01. Run Full Setup
 
 After setup, your main camera should have:
 
