@@ -31,7 +31,7 @@ This guide is intended for users who installed the package through Unity and are
 
 Try running:
 
-    OptikaFX 2D / 01. Run Full Setup
+    Tools / OptikaFX 2D / 01. Run Full Setup
 
 Then check that your scene contains:
 
@@ -57,7 +57,7 @@ Check:
 
 Try:
 
-    OptikaFX 2D / 01. Run Full Setup
+    Tools / OptikaFX 2D / 01. Run Full Setup
 
 ---
 
@@ -67,7 +67,7 @@ If shadows or occlusion are not rendering, the render features may be missing.
 
 Try:
 
-    OptikaFX 2D / 01. Run Full Setup
+    Tools / OptikaFX 2D / 01. Run Full Setup
 
 or:
 
@@ -95,7 +95,7 @@ Check:
 
 Recommended first fix:
 
-    OptikaFX 2D / 01. Run Full Setup
+    Tools / OptikaFX 2D / 01. Run Full Setup
 
 ---
 
@@ -140,7 +140,7 @@ Make sure the Shadow Receiver Material is assigned.
 
 Then select the receiver again or re-run:
 
-    OptikaFX 2D / 01. Run Full Setup
+    Tools / OptikaFX 2D / 01. Run Full Setup
 
 If needed, remove and add the receiver again.
 
