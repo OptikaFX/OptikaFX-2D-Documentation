@@ -1,4 +1,4 @@
-﻿
+
 # Troubleshooting
 
 This page lists common issues and solutions when using OptikaFX 2D in Unity.
@@ -13,7 +13,7 @@ This guide is intended for users who installed the package through Unity and are
 - [Caster Issues](#caster-issues)
 - [Wall Bending Issues](#wall-bending-issues)
 - [Occluder Issues](#occluder-issues)
-- [Camera and Shadow Rug Issues](#camera-and-shadow-rug-issues)
+- [Camera and Shadow Matte Issues](#camera-and-shadow-matte-issues)
 - [Global Light Issues](#global-light-issues)
 - [Local Light Issues](#local-light-issues)
 - [TimeManager Issues](#timemanager-issues)
@@ -85,7 +85,7 @@ Check:
 
 - The scene has a `Global Light`.
 - The camera has `ShadowRenderQuad`.
-- At least one shadow rug is enabled.
+- At least one shadow matte is enabled.
 - A `Caster` exists.
 - A `Receiver` exists.
 - The receiver material is assigned.
@@ -104,15 +104,15 @@ Recommended first fix:
 Check the active camera:
 
 - It has `ShadowRenderQuad`.
-- The `Shadow Rugs` list has at least one enabled rug.
-- The rug has a valid Quad Material.
-- The rug sorting layer/order is not hidden behind other renderers.
+- The `Shadow Mattes` list has at least one enabled matte.
+- The matte has a valid Quad Material.
+- The matte sorting layer/order is not hidden behind other renderers.
 
 Also check:
 
 - The receiver is visible.
 - The receiver is enabled.
-- The receiver area type matches the rug rules.
+- The receiver area type matches the matte rules.
 
 ---
 
@@ -155,7 +155,7 @@ Check:
 - The receiver material is assigned.
 - The object has a `ShadowArea`.
 - The ShadowArea type is correct.
-- The camera has a shadow rug that allows that area.
+- The camera has a shadow matte that allows that area.
 - Elevation levels match.
 
 ---
@@ -165,16 +165,16 @@ Check:
 Check:
 
 - ShadowArea type.
-- Required Area on the camera shadow rug.
+- Required Area on the camera shadow matte.
 - Blocked By rules.
 - Receiver elevation level.
 - Caster elevation level.
-- Shadow rug elevation level.
+- Shadow matte elevation level.
 
 Example:
 
 - Ground shadows need Ground area or `Anywhere`.
-- Wall shadows need Wall area or a wall-compatible rug.
+- Wall shadows need Wall area or a wall-compatible matte.
 - Water/Hole areas can block shadows if configured.
 
 ---
@@ -185,8 +185,8 @@ Check:
 
 - The water/hole object has `ShadowArea`.
 - The ShadowArea type is `Hole_Water_Blue`.
-- The camera shadow rug uses `Blocked By: Holes And Water`.
-- The material/shadow rug is assigned correctly.
+- The camera shadow matte uses `Blocked By: Holes And Water`.
+- The material/shadow matte is assigned correctly.
 - The object is rendered into the mask.
 
 ---
@@ -244,7 +244,7 @@ Adjust:
 - Shadow color alpha
 - ShadowProfile settings
 - LocalLight intensity
-- Shadow rug material/settings
+- Shadow matte material/settings
 
 ---
 
@@ -453,14 +453,14 @@ Adjust:
 
 ---
 
-## Camera and Shadow Rug Issues
+## Camera and Shadow Matte Issues
 
 ### Camera does not display shadows
 
 Check:
 
 - The active camera has `ShadowRenderQuad`.
-- At least one shadow rug is enabled.
+- At least one shadow matte is enabled.
 - Quad Material is assigned.
 - Sorting Layer and Sorting Order are correct.
 - The camera is the one used in Game view.
@@ -471,8 +471,8 @@ Check:
 
 Adjust:
 
-- Shadow rug Sorting Layer.
-- Shadow rug Sorting Order.
+- Shadow matte Sorting Layer.
+- Shadow matte Sorting Order.
 - SpriteRenderer sorting settings.
 - TilemapRenderer sorting settings.
 
@@ -480,7 +480,7 @@ Adjust:
 
 ### Shadows render over everything
 
-Lower the shadow rug Sorting Order.
+Lower the shadow matte Sorting Order.
 
 Example:
 
@@ -492,9 +492,9 @@ Or use a sorting layer that renders below characters.
 
 ### Environment shadows are duplicated
 
-Check if environment shadow is enabled on more than one shadow rug.
+Check if environment shadow is enabled on more than one shadow matte.
 
-Usually only one main rug should include environment shadows.
+Usually only one main matte should include environment shadows.
 
 ---
 
@@ -504,7 +504,7 @@ Check:
 
 - Caster elevation level.
 - Receiver elevation level.
-- Shadow rug elevation level.
+- Shadow matte elevation level.
 - Camera ShadowRenderQuad configuration.
 
 ---
@@ -521,7 +521,7 @@ Check:
 - Projection Length is above zero.
 - Shadow color alpha is not zero.
 - Caster uses global light direction.
-- Receiver and camera shadow rug are configured.
+- Receiver and camera shadow matte are configured.
 
 ---
 
@@ -728,8 +728,8 @@ Make sure only one persistent Clock UI exists in the first loaded scene.
 
 Check:
 
-- Shadow rug Sorting Layer.
-- Shadow rug Sorting Order.
+- Shadow matte Sorting Layer.
+- Shadow matte Sorting Order.
 - Receiver sorting layer/order.
 - SpriteRenderer sorting layer/order.
 - TilemapRenderer sorting layer/order.
@@ -738,7 +738,7 @@ Check:
 
 ### Shadows are hidden behind tilemaps
 
-Increase or adjust the shadow rug Sorting Order.
+Increase or adjust the shadow matte Sorting Order.
 
 Also check TilemapRenderer sorting settings.
 
@@ -746,7 +746,7 @@ Also check TilemapRenderer sorting settings.
 
 ### Shadows render above the character
 
-Lower the shadow rug Sorting Order or use a sorting layer below the character.
+Lower the shadow matte Sorting Order or use a sorting layer below the character.
 
 ---
 
@@ -761,7 +761,7 @@ Try:
 - Disable unnecessary occluders.
 - Avoid rebuilding tilemap occluders every frame.
 - Use Blob shadows for simple characters.
-- Use fewer shadow rugs.
+- Use fewer shadow mattes.
 - Reduce expensive debug overlays in runtime.
 
 ---
