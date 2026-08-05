@@ -11,7 +11,6 @@ Open the sample scene:
 
 ```text 
 01 - Scarecrow Tutorial
-
 ```
 
 When this scene is opened, the Scarecrow Tutorial window appears automatically and guides you through the basic OptikaFX setup step by step.
@@ -23,6 +22,8 @@ Tutorial guide:
 ---
 
 ## Step-by-step Setup
+
+### Before starting, remember to always use the sprite pivot at the bottom center or right between the character's feet.
 
 ## 1. Run Full Setup
 
@@ -167,7 +168,7 @@ Check that your main camera has:
 - `Camera`
 - `ShadowRenderQuad`
 
-`ShadowRenderQuad` draws the final shadow layer using shadow rugs.
+`ShadowRenderQuad` draws the final shadow layer using shadow mattes.
 
 ![OptikaFX 2D Menu](./images/configure-camera.png)
 
@@ -176,7 +177,7 @@ If shadows are missing or sorted incorrectly, check:
 - Quad Material
 - Sorting Layer
 - Sorting Order
-- Enabled shadow rugs
+- Enabled shadow mattes
 - Required Area rules
 
 See:
