@@ -1,30 +1,30 @@
-﻿# Camera and Shadow Rugs
+# Camera and Shadow Mattes
 
 The camera setup is responsible for rendering the final OptikaFX 2D shadow layer.
 
-OptikaFX uses a `ShadowRenderQuad` component on the camera. Each entry in this component is a shadow rug, also called a shadow quad.
+OptikaFX uses a `ShadowRenderQuad` component on the camera. Each entry in this component is a shadow matte, also called a shadow quad.
 
-A shadow rug is a full-screen or camera-aligned quad that displays the resolved shadow mask using specific rules such as elevation, area type, blocking and sorting.
+A shadow matte is a full-screen or camera-aligned quad that displays the resolved shadow mask using specific rules such as shadow layer, area type, blocking and sorting.
 
 ## Index
 
 - [Overview](#overview)
 - [Camera Setup](#camera-setup)
 - [ShadowRenderQuad](#shadowrenderquad)
-- [What Are Shadow Rugs](#what-are-shadow-rugs)
+- [What Are Shadow Mattes](#what-are-shadow-mattes)
 - [Main Fields](#main-fields)
-- [Shadow Rug Fields](#shadow-rug-fields)
+- [Shadow Matte Fields](#shadow-matte-fields)
 - [Area Rules](#area-rules)
 - [Blocked By Rules](#blocked-by-rules)
-- [Elevation Level](#elevation-level)
+- [Shadow Layer](#shadow-layer)
 - [Environment Shadow](#environment-shadow)
 - [Sorting Layer and Order](#sorting-layer-and-order)
-- [Multiple Shadow Rugs](#multiple-shadow-rugs)
+- [Multiple Shadow Mattes](#multiple-shadow-mattes)
 - [Recommended Setup](#recommended-setup)
 - [Useful C# Examples](#useful-c-examples)
   - [Get ShadowRenderQuad from camera](#get-shadowrenderquad-from-camera)
-  - [Enable or disable first shadow rug](#enable-or-disable-first-shadow-rug)
-  - [Set shadow rug material](#set-shadow-rug-material)
+  - [Enable or disable first shadow matte](#enable-or-disable-first-shadow-matte)
+  - [Set shadow matte material](#set-shadow-matte-material)
   - [Set sorting order](#set-sorting-order)
 - [Troubleshooting](#troubleshooting)
 
@@ -36,11 +36,11 @@ OptikaFX renders shadows through render textures and mask passes.
 
 The final visible shadow layer is drawn by the camera using `ShadowRenderQuad`.
 
-The `ShadowRenderQuad` contains one or more shadow rugs.
+The `ShadowRenderQuad` contains one or more shadow mattes.
 
-Each shadow rug defines:
+Each shadow matte defines:
 
-- Which elevation level it renders
+- Which shadow layer it renders
 - Where shadows are allowed to appear
 - What blocks the shadows
 - Whether environment shadows are included
@@ -74,7 +74,7 @@ If the camera does not have this component, shadows may be generated internally 
 
 `ShadowRenderQuad` is attached to the camera.
 
-It creates and updates shadow rug quads as camera children.
+It creates and updates shadow matte quads as camera children.
 
 These quads are usually hidden/internal generated objects.
 
@@ -82,19 +82,19 @@ The component contains a list:
 
     Shadow Quads
 
-Each element in this list represents one shadow rug.
+Each element in this list represents one shadow matte.
 
 ---
 
-## What Are Shadow Rugs
+## What Are Shadow Mattes
 
-A shadow rug is a camera-aligned quad that receives and displays the resolved shadow mask.
+A shadow matte is a camera-aligned quad that receives and displays the resolved shadow mask.
 
 Think of it as a visual layer where shadows are drawn.
 
-You can use multiple rugs for:
+You can use multiple mattes for:
 
-- Different elevation levels
+- Different shadow layer
 - Different sorting layers
 - Ground-only shadows
 - Wall-only shadows
@@ -109,7 +109,7 @@ Common ShadowRenderQuad fields include:
 
 | Field | Description |
 |---|---|
-| `Shadow Rugs` | List of shadow rug configurations. |
+| `Shadow mattes` | List of shadow matte configurations. |
 | `Final Shadow Color` | Controls how final shadow tint is resolved. |
 | `Use Day Night Shadow Tint` | Uses GlobalLight or TimeManager shadow color when available. |
 | `Fallback Shadow Tint` | Color used if no GlobalLight/TimeManager color is available. |
@@ -118,30 +118,30 @@ Names may vary depending on inspector version.
 
 ---
 
-## Shadow Rug Fields
+## Shadow Matte Fields
 
-Each shadow rug entry can contain:
+Each shadow matte entry can contain:
 
 | Field | Description |
 |---|---|
-| `Is Enabled` | Enables or disables this shadow rug. |
-| `Floor Name` | Display name for the rug. |
-| `Elevation Level` | Elevation level rendered by this rug. |
-| `Required Area` | Defines where this rug can draw shadows. |
-| `Blocked By` | Defines what blocks this rug. |
+| `Is Enabled` | Enables or disables this shadow matte. |
+| `Floor Name` | Display name for the matte. |
+| `Shadow Layer` | Shadow layer rendered by this matte. |
+| `Required Area` | Defines where this matte can draw shadows. |
+| `Blocked By` | Defines what blocks this matte. |
 | `Use Environment Shadow` | Includes environment/occluder shadows. |
 | `Environment Shadow Strength` | Strength of environment shadows. |
 | `Environment Shadow Ignores Area Rules` | Allows environment shadows to ignore Required Area. |
 | `Environment Shadow Ignores Blocked By` | Allows environment shadows to ignore Blocked By rules. |
-| `Sorting Layer Name` | Sorting layer used by the rug renderer. |
-| `Sorting Order` | Sorting order used by the rug renderer. |
-| `Quad Material` | Material used to render this rug. |
+| `Sorting Layer Name` | Sorting layer used by the matte renderer. |
+| `Sorting Order` | Sorting order used by the matte renderer. |
+| `Quad Material` | Material used to render this matte. |
 
 ---
 
 ## Area Rules
 
-`Required Area` controls where the rug can draw shadows.
+`Required Area` controls where the matte can draw shadows.
 
 Common options:
 
@@ -155,8 +155,8 @@ Use this to separate ground shadows from wall shadows.
 
 Example:
 
-- Ground rug uses `Only On Ground`
-- Wall rug uses `Only On Wall`
+- Ground matte uses `Only On Ground`
+- Wall matte uses `Only On Wall`
 
 ---
 
@@ -168,42 +168,43 @@ Common options:
 
 | Blocked By | Description |
 |---|---|
-| `Nothing` | Nothing blocks this rug. |
+| `Nothing` | Nothing blocks this matte. |
 | `Holes And Water` | Hole/water areas block shadows. |
 
 Use `Holes And Water` when shadows should not appear over holes, water or void areas.
 
 ---
 
-## Elevation Level
+## Shadow Layer
 
-Elevation Level lets you render shadows for different height layers.
+Shadow layer lets you render shadows for different height layers.
 
-Use elevation levels for:
+Use shadow layer for:
 
 - Platforms
 - Bridges
 - Multi-floor scenes
 - Raised terrain
 - Separate vertical layers
+- Cloud or tree shadows
 
-Caster, receiver and rug elevation should match when needed.
+Caster, receiver and Shadow Layer should match when needed.
 
 Example:
 
-| Object | Elevation |
+| Object | Shadow Layer |
 |---|---:|
 | Ground receiver | `0` |
 | Player caster | `0` |
-| Shadow rug | `0` |
+| Shadow matte | `0` |
 
 For a raised platform:
 
-| Object | Elevation |
+| Object | Shadow Layer |
 |---|---:|
 | Platform receiver | `1` |
 | Platform caster | `1` |
-| Shadow rug | `1` |
+| Shadow matte | `1` |
 
 ---
 
@@ -215,7 +216,7 @@ Use:
 
     Use Environment Shadow
 
-when this rug should include environment/occluder shadows.
+when this matte should include environment/occluder shadows.
 
 Useful settings:
 
@@ -227,14 +228,14 @@ Useful settings:
 
 Recommended:
 
-- Enable environment shadow on only one main rug unless you need multiple environment layers.
-- Avoid duplicating environment shadow on many rugs unless intentional.
+- Enable environment shadow on only one main matte unless you need multiple environment layers.
+- Avoid duplicating environment shadow on many mattes unless intentional.
 
 ---
 
 ## Sorting Layer and Order
 
-The rug is rendered using Unity sorting.
+The matte is rendered using Unity sorting.
 
 Important fields:
 
@@ -257,40 +258,40 @@ Sorting depends heavily on your project rendering order.
 
 ---
 
-## Multiple Shadow Rugs
+## Multiple Shadow Mattes
 
-You can use multiple shadow rugs.
+You can use multiple shadow mattes.
 
 Examples:
 
-### One simple rug
+### One simple matte
 
-Use one rug for all basic shadows.
+Use one matte for all basic shadows.
 
 Recommended for simple projects.
 
-### Ground and wall rugs
+### Ground and wall mattes
 
-Use two rugs:
+Use two mattes:
 
-| Rug | Required Area | Purpose |
+| Matte | Required Area | Purpose |
 |---|---|---|
-| Ground Rug | Only On Ground | Ground shadows |
-| Wall Rug | Only On Wall | Wall shadows |
+| Ground Matte | Only On Ground | Ground shadows |
+| Wall Matte | Only On Wall | Wall shadows |
 
-### Elevation rugs
+### Shadow layer
 
-Use one rug per elevation level:
+Use one matte per Shadow Layer:
 
-| Rug | Elevation |
+| Matte | Shadow Layer |
 |---|---:|
-| Ground Level Rug | 0 |
-| Platform Rug | 1 |
-| Upper Platform Rug | 2 |
+| Ground Level Matte | 0 |
+| Platform Matte | 1 |
+| Upper Platform Matte | 2 |
 
-### Environment rug
+### Environment matte
 
-Use one rug with environment shadow enabled.
+Use one matte with environment shadow enabled.
 
 This allows occluders/environment masks to be shown.
 
@@ -303,19 +304,19 @@ For most projects:
 1. Run Full Setup.
 2. Select the Main Camera.
 3. Confirm `ShadowRenderQuad` exists.
-4. Open `Shadow Rugs`.
-5. Make sure at least one rug is enabled.
+4. Open `Shadow Mattes`.
+5. Make sure at least one matte is enabled.
 6. Confirm `Quad Material` is assigned.
 7. Set `Required Area` to `Anywhere` or `Only On Ground`.
 8. Set `Blocked By` to `Holes And Water` if needed.
 9. Set Sorting Layer and Order to match your scene.
 
-Simple recommended rug:
+Simple recommended matte:
 
 | Field | Value |
 |---|---|
 | `Is Enabled` | Enabled |
-| `Elevation Level` | `0` |
+| `Shadow Layer` | `0` |
 | `Required Area` | `Anywhere` |
 | `Blocked By` | `Holes And Water` |
 | `Use Environment Shadow` | Enabled |
@@ -352,17 +353,17 @@ public class ShadowRenderQuadExample : MonoBehaviour
 ```
 ---
 
-## Enable or disable first shadow rug
+## Enable or disable first shadow matte
 ```csharp
 using UnityEngine;
 using OptikaFX;
 
-public class ToggleFirstShadowRug : MonoBehaviour
+public class ToggleFirstShadowMatte : MonoBehaviour
 {
     [SerializeField]
     private ShadowRenderQuad shadowRenderQuad;
 
-    public void SetFirstRugEnabled(bool enabled)
+    public void SetFirstMatteEnabled(bool enabled)
     {
         if (shadowRenderQuad == null)
             return;
@@ -379,20 +380,20 @@ public class ToggleFirstShadowRug : MonoBehaviour
 ```
 ---
 
-## Set shadow rug material
+## Set shadow matte material
 ```csharp
 using UnityEngine;
 using OptikaFX;
 
-public class ShadowRugMaterialExample : MonoBehaviour
+public class ShadowMatteMaterialExample : MonoBehaviour
 {
     [SerializeField]
     private ShadowRenderQuad shadowRenderQuad;
 
     [SerializeField]
-    private Material rugMaterial;
+    private Material matteMaterial;
 
-    public void ApplyMaterialToFirstRug()
+    public void ApplyMaterialToFirstMatte()
     {
         if (shadowRenderQuad == null)
             return;
@@ -402,7 +403,7 @@ public class ShadowRugMaterialExample : MonoBehaviour
             return;
         }
 
-        shadowRenderQuad.shadowQuads[0].quadMaterial = rugMaterial;
+        shadowRenderQuad.shadowQuads[0].quadMaterial = matteMaterial;
     }
 }
 
@@ -414,12 +415,12 @@ public class ShadowRugMaterialExample : MonoBehaviour
 using UnityEngine;
 using OptikaFX;
 
-public class ShadowRugSortingExample : MonoBehaviour
+public class ShadowMatteSortingExample : MonoBehaviour
 {
     [SerializeField]
     private ShadowRenderQuad shadowRenderQuad;
 
-    public void SetFirstRugSortingOrder(int order)
+    public void SetFirstMatteSortingOrder(int order)
     {
         if (shadowRenderQuad == null)
             return;
@@ -443,7 +444,7 @@ public class ShadowRugSortingExample : MonoBehaviour
 Check:
 
 - The camera has a `ShadowRenderQuad` component.
-- At least one shadow rug is enabled.
+- At least one shadow matte is enabled.
 - `Quad Material` is assigned.
 - Sorting Layer and Sorting Order are correct.
 - GlobalLight exists.
@@ -455,14 +456,14 @@ Check:
 
 Adjust:
 
-- Shadow rug `Sorting Layer Name`
-- Shadow rug `Sorting Order`
+- Shadow matte `Sorting Layer Name`
+- Shadow matte `Sorting Order`
 - SpriteRenderer sorting settings
 - TilemapRenderer sorting settings
 
 ### Shadows render over everything
 
-Lower the shadow rug sorting order.
+Lower the shadow matte sorting order.
 
 Example:
 
@@ -478,13 +479,13 @@ Check:
 - `Blocked By`
 - ShadowArea type
 - Receiver type
-- Elevation Level
+- Shadow Layer
 
 ### Environment shadows are duplicated
 
-Check if `Use Environment Shadow` is enabled on more than one rug.
+Check if `Use Environment Shadow` is enabled on more than one matte.
 
-Usually only one main rug should include environment shadows.
+Usually only one main matte should include environment shadows.
 
 ### Shadows appear on water or holes
 
@@ -500,7 +501,7 @@ Check:
 
 - Wall receiver exists.
 - ShadowArea type is Wall.
-- A rug exists for wall shadows.
+- A matte exists for wall shadows.
 - `Required Area` allows wall rendering.
 - Sorting order places wall shadows correctly.
 
