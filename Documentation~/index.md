@@ -1,4 +1,4 @@
-﻿
+
 # OptikaFX 2D Documentation
 
 Welcome to the OptikaFX 2D documentation.
@@ -61,7 +61,7 @@ Use these guides to understand:
 
 - How sprites cast shadows
 - How surfaces receive shadows
-- How shadow rugs are configured on the camera
+- How shadow mattes are configured on the camera
 - How shadow resolving modes work
 - How multi-shadow behavior is controlled
 - How shadows bend onto walls
@@ -228,7 +228,7 @@ The troubleshooting guide covers:
 - Caster problems
 - Wall bending issues
 - Occluder issues
-- Camera and shadow rug issues
+- Camera and shadow matte issues
 - Global Light issues
 - Local Light issues
 - Light Resolver issues
@@ -292,7 +292,7 @@ For most scenes:
 
 1. Run Full Setup.
 2. Confirm the OptikaFX 2D Manager was created.
-3. Configure the camera shadow rugs.
+3. Configure the camera shadow mattes.
 4. Add receivers to ground and walls.
 5. Add casters to sprites.
 6. Adjust Global Light.
