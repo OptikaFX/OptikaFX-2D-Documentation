@@ -1,4 +1,4 @@
-﻿
+
 # Casters
 
 The `Caster` component generates shadows from SpriteRenderer objects in OptikaFX 2D.
@@ -292,7 +292,7 @@ Elevation is useful for:
 - Stairs/platforms
 - Multi-level scenes
 
-Make sure caster elevation matches the receiver and camera shadow rug when needed.
+Make sure caster elevation matches the receiver and camera shadow matte when needed.
 
 For more information, see:
 
