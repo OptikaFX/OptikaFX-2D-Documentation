@@ -4,15 +4,6 @@
 
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
-<div align="center">
-<img src="Documentation~/images/Header_GitHub.png" alt="OptikaFX 2D Logo" width="1080">
-</div>
-
-<p align="center">
-  <a href="https://assetstore.unity.com/packages/slug/YOUR-ASSET-SLUG" target="_blank">
-    <img src="https://img.shields.io/badge/Get%20it%20on-Unity%20Asset%20Store-black?style=for-the-badge&logo=unity" alt="Get it on Unity Asset Store">
-  </a>
-</p>
 ---
 
 ## Features
@@ -98,7 +89,9 @@ OptikaFX 2D / Add Casters and Receivers / Add Receivers to Selected Game Objects
 - Camera
 - ShadowRenderQuad
 
-7. Configure the `ShadowRenderQuad` shadow rugs so shadows draw in the correct sorting layer/order.
+7. Configure the `ShadowRenderQuad` shadow mattes so shadows draw in the correct sorting layer/order.
+
+8. Remember to use the sprite pivot at the bottom center or right between the character's feet.
 
 Full guide:
 
@@ -110,46 +103,46 @@ Full guide:
 
 Main documentation files:
 
-- [Documentation Index](Documentation~/index.md)
-- [Quick Start](Documentation~/quick-start.md)
-- [Scarecrow Tutorial](Documentation~/scarecrow-tutorial.md)
-- [Animator Blend Tree Setup](Documentation~/animator-blend-tree-setup.md)
-- [Camera](Documentation~/camera.md)
-- [Casters](Documentation~/casters.md)
-- [Clock UI](Documentation~/clock-ui.md)
-- [Global Light](Documentation~/global-light.md)
-- [Horizontal Proxy](Documentation~/horizontal-proxy.md)
-- [Light Resolver](Documentation~/light-resolver.md)
-- [Local Light](Documentation~/local-light.md)
-- [Occluders](Documentation~/occluders.md)
-- [Optional Modules](Documentation~/optional-modules.md)
-- [Receivers](Documentation~/receivers.md)
-- [TimeManager](Documentation~/time-manager.md)
-- [Troubleshooting](Documentation~/troubleshooting.md)
-- [Wall Bending](Documentation~/wall-bending.md)
+- [Documentation Index](Documentation/index.md)
+- [Quick Start](Documentation/quick-start.md)
+- [Scarecrow Tutorial](Documentation/scarecrow-tutorial.md)
+- [Animator Blend Tree Setup](Documentation/animator-blend-tree-setup.md)
+- [Camera](Documentation/camera.md)
+- [Casters](Documentation/casters.md)
+- [Clock UI](Documentation/clock-ui.md)
+- [Global Light](Documentation/global-light.md)
+- [Horizontal Proxy](Documentation/horizontal-proxy.md)
+- [Light Resolver](Documentation/light-resolver.md)
+- [Local Light](Documentation/local-light.md)
+- [Occluders](Documentation/occluders.md)
+- [Optional Modules](Documentation/optional-modules.md)
+- [Receivers](Documentation/receivers.md)
+- [TimeManager](Documentation/time-manager.md)
+- [Troubleshooting](Documentation/troubleshooting.md)
+- [Wall Bending](Documentation/wall-bending.md)
 
 Recommended reading order:
 
-1. [Quick Start](Documentation~/quick-start.md)
-2. [Scarecrow Tutorial](Documentation~/scarecrow-tutorial.md)
-3. [Camera](Documentation~/camera.md)
-4. [Receivers](Documentation~/receivers.md)
-5. [Casters](Documentation~/casters.md)
-6. [Global Light](Documentation~/global-light.md)
-7. [Light Resolver](Documentation~/light-resolver.md)
-8. [Local Light](Documentation~/local-light.md)
-9. [TimeManager](Documentation~/time-manager.md)
-. [Clock UI](Documentation~/clock-ui.md)
+1. [Quick Start](Documentation/quick-start.md)
+2. [Scarecrow Tutorial](Documentation/scarecrow-tutorial.md)
+3. [Camera](Documentation/camera.md)
+4. [Receivers](Documentation/receivers.md)
+5. [Casters](Documentation/casters.md)
+6. [Global Light](Documentation/global-light.md)
+7. [Light Resolver](Documentation/light-resolver.md)
+8. [Local Light](Documentation/local-light.md)
+9. [TimeManager](Documentation/time-manager.md)
+. [Clock UI](Documentation/clock-ui.md)
 
 Advanced topics:
 
-- [Animator Blend Tree Setup](Documentation~/animator-blend-tree-setup.md)
-- [Horizontal Proxy](Documentation~/horizontal-proxy.md)
-- [Light Resolver](Documentation~/light-resolver.md)
-- [Occluders](Documentation~/occluders.md)
-- [Wall Bending](Documentation~/wall-bending.md)
-- [Optional Modules](Documentation~/optional-modules.md)
-- [Troubleshooting](Documentation~/troubleshooting.md)
+- [Animator Blend Tree Setup](Documentation/animator-blend-tree-setup.md)
+- [Horizontal Proxy](Documentation/horizontal-proxy.md)
+- [Light Resolver](Documentation/light-resolver.md)
+- [Occluders](Documentation/occluders.md)
+- [Wall Bending](Documentation/wall-bending.md)
+- [Optional Modules](Documentation/optional-modules.md)
+- [Troubleshooting](Documentation/troubleshooting.md)
 
 ---
 
