@@ -9,7 +9,7 @@ It provides projected shadows, wall bending, blob shadows, occlusion, sprite/til
 > **OptikaFX 2D is currently under review by Unity.**  
 > This package has been submitted and is awaiting official release on the Unity Asset Store. The source code and shader graphs are **not** included in this repository. This page serves strictly as the official documentation and setup guide for future buyers.
 > 
-> * 🕹️ **Want to test it?** Play the Play the <a href="https://optikafx.itch.io/optikafx-2d" target="_blank">Playable Web Demo on Itch.io</a>
+> * 🕹️ **Want to test it?** Play the <a href="https://optikafx.itch.io/optikafx-2d" target="_blank">Playable Sample Scene on Itch.io</a>
 
 > * 📢 **Stay Tuned:** Follow this repository or watch for updates to be notified immediately when the asset goes live with its launch discount!
 
