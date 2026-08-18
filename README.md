@@ -4,6 +4,7 @@
 
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
+
 > [!IMPORTANT]
 > **OptikaFX 2D is currently under review by Unity.**  
 > This package has been submitted and is awaiting official release on the Unity Asset Store. The source code and shader graphs are **not** included in this repository. This page serves strictly as the official documentation and setup guide for future buyers.
