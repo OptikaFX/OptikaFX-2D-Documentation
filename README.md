@@ -5,7 +5,8 @@
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
 
-[![Get OptikaFX 2D on Unity Asset Store](https://shields.io)](https://u3d.as/42Ld)
+[![Get OptikaFX 2D on Unity Asset Store](https://shields.io)](https://u3d.as)
+
 
 ---
 
