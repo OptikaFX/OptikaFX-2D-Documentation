@@ -4,7 +4,6 @@
 
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
-
 <p align="left">
   <a href="https://u3d.as/42Ld">
     <img
@@ -14,6 +13,11 @@ It provides projected shadows, wall bending, blob shadows, occlusion, sprite/til
   </a>
 </p>
 
+<p align="left">
+  <a href="https://optikafx.itch.io/optikafx-2d">
+    <img src="https://img.shields.io/badge/Play%20a Sample Scene%20-itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="Play a Sample Scene on itch.io">
+  </a>
+</p>
 
 ---
 
