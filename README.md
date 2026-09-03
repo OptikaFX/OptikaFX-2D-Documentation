@@ -5,15 +5,7 @@
 It provides projected shadows, wall bending, blob shadows, occlusion, sprite/tilemap receivers, global/local light integration, Light Resolver shadow resolving, day/night lighting presets, editor setup tools and optional UI/debug modules.
 
 
-<!-- Botão com Link externo -->
-    <a href="https://u3d.as/42Ld" target="_blank" rel="noopener noreferrer" class="unity-btn">
-        <!-- Ícone minimalista de cubo/caixa representando "Asset" -->
-        <svg width="18" height="18" viewBox="0 0 24 24">
-            <path d="M12 2.18l8 4.63v9.38l-8 4.63-8-4.63V6.81l8-4.63M12 0L2 5.77v12.46L12 24l10-5.77V5.77L12 0z"/>
-            <path d="M12 4.8l6 3.46v6.92l-6 3.46-6-3.46V8.26l6-3.46M12 2.6L4 7.22v9.56l8 4.62 8-4.62V7.22l-8-4.62z"/>
-        </svg>
-        Get OptikaFX 2D on Unity Asset Store
-    </a>
+[![Get OptikaFX 2D on Unity Asset Store](https://shields.io)](https://u3d.as/42Ld)
 
 ---
 
