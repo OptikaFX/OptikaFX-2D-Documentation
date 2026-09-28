@@ -189,7 +189,7 @@ Important controls:
 Mixed mode is recommended for animated characters using directional movement.
 
 > Horizontal Proxy is not used in Mixed mode.  
-> Use Animator Auto Remap for directional characters and tune the Mixed mode width/remap settings.
+> Use Light-Perspective Shadow Casting for directional characters and tune the Mixed mode width/remap settings.
 
 For best results, see:
 
@@ -810,7 +810,7 @@ Check:
 
 ---
 
-### Auto remap does not follow the character direction
+### Light-Perspective Shadow Casting does not follow the character direction
 
 Check:
 
@@ -863,14 +863,14 @@ Recommended starting values for Rotation or Mixed modes:
 
 For more information, see:
 
-- [Animator Blend Tree Setup for Auto Remap](animator-blend-tree-setup.md)
+- [Animator Blend Tree Setup for Light-Perspective Shadow Casting](animator-blend-tree-setup.md)
 - [Horizontal Shadow Proxy](horizontal-proxy.md)
 
 ---
 
 ### Horizontal movement looks bad with a Unity Blend Tree
 
-If your character uses a 2D Unity Blend Tree, make sure the Unity Blend Tree direction matches the Caster remap logic.
+If your character uses a 2D Unity Blend Tree, make sure the Unity Blend Tree direction matches the Light-Perspective Shadow Casting logic.
 
 Recommended Unity Blend Tree setup:
 
@@ -919,9 +919,9 @@ Do not reset `LastMoveX` and `LastMoveY` to zero when the character stops.
 
 ---
 
-### Auto remap seems inverted
+### Light-Perspective Shadow Casting seems inverted
 
-If left/right or up/down remap appears inverted:
+If left/right or up/down Light-Perspective Shadow Casting appears inverted:
 
 - Check if your sprite faces right or left by default.
 - Check if the SpriteRenderer uses `Flip X`.
