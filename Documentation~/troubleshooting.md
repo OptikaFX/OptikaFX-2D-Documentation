@@ -272,7 +272,7 @@ Check:
 
 ---
 
-### Auto remap does not follow the character direction
+### Light-Perspective Shadow Casting does not follow the character direction
 
 Check:
 
