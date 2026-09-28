@@ -1,35 +1,32 @@
-﻿
-# Animator Blend Tree Setup for Auto Remap
+# Animator Blend Tree Setup for Light-Perspective Shadow Casting
 
-Auto Remap allows the Caster to adjust shadow behavior based on the character's movement direction.
+Light-Perspective Shadow Casting allows the Caster to adjust shadow behavior based on the character's movement direction.
 
 This is useful for animated characters that use a 2D Blend Tree with movement parameters such as `MoveX` and `MoveY`.
 
 ## Index
 
 - [Overview](#overview)
-- [When to Use Auto Remap](#when-to-use-auto-remap)
+- [When to Use Light-Perspective Shadow Casting](#when-to-use-light-perspective-shadow-casting)
 - [Compatibility](#compatibility)
 - [Required Animator Parameters](#required-animator-parameters)
 - [Blend Tree Setup](#blend-tree-setup)
 - [Idle Direction Setup](#idle-direction-setup)
 - [Caster Setup](#caster-setup)
 - [Recommended Caster Settings](#recommended-caster-settings)
-- [How Auto Remap Works](#how-auto-remap-works)
-- [Horizontal Proxy vs Auto Remap](#horizontal-proxy-vs-auto-remap)
+- [How Light-Perspective Shadow Casting Works](#how-light-perspective-shadow-casting-works)
+- [Horizontal Proxy vs Light-Perspective Shadow Casting](#horizontal-proxy-vs-light-perspective-shadow-casting)
 - [Troubleshooting](#troubleshooting)
 
 ---
 
 ## Overview
 
-![OptikaFX 2D Menu](./images/animator-parameters.png)
-
-Auto Remap reads movement direction from the Animator and uses it to improve the shadow behavior for directional sprites.
+Light-Perspective Shadow Casting reads movement direction from the Animator and uses it to improve the shadow behavior for directional sprites.
 
 It helps the Caster choose better directional behavior when a character faces or moves in different directions.
 
-Auto Remap is especially useful for:
+Light-Perspective Shadow Casting is especially useful for:
 
 - Top-down characters
 - Directional sprites
@@ -39,9 +36,9 @@ Auto Remap is especially useful for:
 
 ---
 
-## When to Use Auto Remap
+## When to Use Light-Perspective Shadow Casting
 
-Use Auto Remap when:
+Use Light-Perspective Shadow Casting when:
 
 - The character uses directional animations.
 - The character has a 2D Blend Tree.
@@ -53,25 +50,25 @@ Use Auto Remap when:
 
 ## Compatibility
 
-Auto Remap can be used with:
+Light-Perspective Shadow Casting can be used with:
 
-| Caster Mode | Auto Remap |
+| Caster Mode | Light-Perspective Shadow Casting |
 |---|---|
 | `Perspective` | Supported |
 | `Rotation` | Supported |
 | `Mixed` | Supported |
 | `TopDownBlob` | Not recommended |
 
-Horizontal Proxy is separate from Auto Remap.
+Horizontal Proxy is separate from Light-Perspective Shadow Casting.
 
 | Feature | Perspective | Rotation | Mixed |
 |---|---:|---:|---:|
-| Auto Remap | No | Yes | Yes |
+| Light-Perspective Shadow Casting | No | Yes | Yes |
 | Horizontal Proxy | Yes | No | No |
 
-For Perspective mode, use Auto Remap via Horizontal Proxy.
+For Perspective mode, use Horizontal Proxy.
 
-For Rotation and Mixed modes, use Auto Remap and tune the mode-specific width/remap settings.
+For Rotation and Mixed modes, use Light-Perspective Shadow Casting and tune the mode-specific width/remap settings.
 
 For more information, see:
 
@@ -104,21 +101,18 @@ Example values:
 | Idle Right | LastMoveX = 1 | LastMoveY = 0 |
 | Idle Left | LastMoveX = -1 | LastMoveY = 0 |
 | Idle Up | LastMoveX = 0 | LastMoveY = 1 |
-| Idle Down | LastMoveX = 0 | LastMoveY = -1 |
+| Idle Down | LastMoveX = 0 | LastMoveY = 1 |
 
 ---
 
 ## Blend Tree Setup
 
-![OptikaFX 2D Menu](./images/blend-tree.png)
-
 Create a 2D Blend Tree in your Animator Controller.
 
 Recommended Blend Type:
 
-```text
-2D Simple Directional
-```
+text 2D Simple Directional
+
 
 or:
 
@@ -126,11 +120,12 @@ or:
 2D Freeform Directional
 ```
 
+
 Use these parameters:
 
 ```text
-MoveX
-MoveY
+MoveX MoveY
+
 ```
 
 Add your directional animations using positions like:
@@ -146,9 +141,6 @@ Add your directional animations using positions like:
 
 ## Idle Direction Setup
 
-![OptikaFX 2D Menu](./images/blend-tree-idle.png)
-
-
 For idle animations, use `LastMoveX` and `LastMoveY`.
 
 When the character stops moving, store the last non-zero direction.
@@ -158,29 +150,24 @@ Example:
 ```csharp
 using UnityEngine;
 
-public class PlayerAnimatorDirection : MonoBehaviour
+public class PlayerAnimatorDirection : MonoBehaviour { [SerializeField] private Animator animator;
+
+private void Update() { Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+if (input.sqrMagnitude > 1f)
+    input.Normalize();
+
+animator.SetFloat("MoveX", input.x);
+animator.SetFloat("MoveY", input.y);
+
+if (input.sqrMagnitude > 0.001f)
 {
-    [SerializeField]
-    private Animator animator;
-
-    private void Update()
-    {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        if (input.sqrMagnitude > 1f)
-            input.Normalize();
-
-        animator.SetFloat("MoveX", input.x);
-        animator.SetFloat("MoveY", input.y);
-
-        if (input.sqrMagnitude > 0.001f)
-        {
-            animator.SetFloat("LastMoveX", input.x);
-            animator.SetFloat("LastMoveY", input.y);
-        }
-    }
+    animator.SetFloat("LastMoveX", input.x);
+    animator.SetFloat("LastMoveY", input.y);
 }
+} }
 ```
+
 
 If you use the Input System, replace the input reading with your own movement vector.
 
@@ -199,21 +186,9 @@ Use one of these modes:
 - `Rotation`
 - `Mixed`
 
-Then open the Animated Direction Remap.
+Then open the **Light-Perspective Shadow Casting** foldout.
 
-![OptikaFX 2D Menu](./images/caster-remap-section.png)
 
-Enable:
-
-```text
-Use Animated Direction Remap
-```
-
-Assign:
-
-| Caster Field | Animator Parameter |
-|---|---|
-| `Source Animator` | The character Animator |
 | `Move X Param` | `MoveX` |
 | `Move Y Param` | `MoveY` |
 | `Last Move X Param` | `LastMoveX` |
@@ -231,6 +206,7 @@ For animated characters:
 | `Caster Motion Mode` | `Animated Or Dynamic` |
 | `Use Animated Direction Remap` | Enabled |
 | `Source Animator` | Character Animator |
+| `Side Remap Half Angle` | `22.5` |
 | `Move X Param` | `MoveX` |
 | `Move Y Param` | `MoveY` |
 | `Last Move X Param` | `LastMoveX` |
@@ -244,23 +220,37 @@ For more information, see:
 
 ---
 
-## How Auto Remap Works
+## How Light-Perspective Shadow Casting Works
+
+The Caster reads the movement direction from the Animator parameters.
+
+When `Use Animated Direction Remap` is checked, the Caster automatically resolves its own remapped animated sprite so the shadow matches the character's facing direction.
+
+When the character is moving, it uses:
+
+For more information, see:
+
+- [Horizontal Proxy](horizontal-proxy.md)
+
+---
+
+## How Light-Perspective Shadow Casting Works
 
 The Caster reads the movement direction from the Animator parameters.
 
 When the character is moving, it uses:
 
-```text
-MoveX
-MoveY
+```text 
+MoveX MoveY
 ```
+
 
 When the character is idle, it can use:
 
 ```text
-LastMoveX
-LastMoveY
+LastMoveX LastMoveY
 ```
+
 
 This allows the shadow to stay consistent with the direction the character is facing.
 
@@ -273,15 +263,15 @@ For example:
 
 ---
 
-## Horizontal Proxy vs Auto Remap
+## Horizontal Proxy vs Light-Perspective Shadow Casting
 
-Auto Remap and Horizontal Proxy solve related but different problems.
+Light-Perspective Shadow Casting and Horizontal Proxy solve related but different problems.
 
-### Auto Remap
+### Light-Perspective Shadow Casting
 
-Auto Remap reads Animator direction parameters and adjusts Caster behavior based on movement direction.
+Light-Perspective Shadow Casting reads Animator direction parameters and adjusts Caster behavior based on movement direction.
 
-Use Auto Remap for:
+Use Light-Perspective Shadow Casting for:
 
 - Directional characters
 - Blend Tree animation
@@ -302,13 +292,14 @@ Use Horizontal Proxy for:
 
 ## Troubleshooting
 
-### Auto remap does not work
+### Light-Perspective Shadow Casting does not work
 
 Check:
 
 - The Caster is in `Perspective`, `Rotation` or `Mixed` mode.
-- `Use Animated Direction Remap` is enabled.
+- `Use Animated Direction Remap` is enabled in the Light-Perspective Shadow Casting section.
 - `Source Animator` is assigned.
+- `Side Remap Half Angle` is properly configured.
 - Animator parameter names match exactly.
 - Parameters are Float type.
 - `MoveX` and `MoveY` are being updated at runtime.
@@ -323,7 +314,7 @@ Check:
 - Your Blend Tree positions.
 - Your MoveX/MoveY values.
 - Your character sprite orientation.
-- `Side Remap Half Angle`.
+- `Side Remap Half Angle` angle setting.
 - Perspective/Rotation/Mixed remap settings.
 - SpriteRenderer flip settings.
 
@@ -335,13 +326,10 @@ Make sure you update `LastMoveX` and `LastMoveY` only when movement input is not
 
 Use this pattern:
 
-```csharp
-if (input.sqrMagnitude > 0.001f)
-{
-    animator.SetFloat("LastMoveX", input.x);
-    animator.SetFloat("LastMoveY", input.y);
-}
+```csharp 
+if (input.sqrMagnitude > 0.001f) { animator.SetFloat("LastMoveX", input.x); animator.SetFloat("LastMoveY", input.y); }
 ```
+
 
 Do not set `LastMoveX` and `LastMoveY` to zero when the character stops.
 
@@ -370,8 +358,8 @@ For `Perspective` mode:
 
 For `Rotation` and `Mixed` modes:
 
-- Use Auto Remap.
-- Tune width/remap settings in the Caster inspector.
+- Use Light-Perspective Shadow Casting.
+- Tune `Side Remap Half Angle` and width/remap settings in the Caster inspector.
 - Check Blend Tree directions.
 
 For more information, see:
