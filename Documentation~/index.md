@@ -98,7 +98,7 @@ These pages are especially useful for animated characters and directional sprite
 Use these guides when:
 
 - Your character uses a 2D Blend Tree
-- You want auto remap to follow movement direction
+- You want Light-Perspective Shadow Casting to follow movement direction
 - Shadows become too thin at horizontal angles
 - You need better side-facing shadow silhouettes
 - You need to tune how casters respond to global and local lights
